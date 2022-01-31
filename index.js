@@ -1,5 +1,6 @@
 const inquire = require("inquirer");
 const mysql = require("mysql2/promise");
+require = ('console.table');
 
 const connection = mysql.createConnection ({
     host: "localhost",
@@ -11,15 +12,15 @@ const connection = mysql.createConnection ({
 
 startProgram();
 
-function startProgram() {
-    const {mainList} =  inquire.prompt([{
+async function startProgram() {
+    const {mainList} = await inquire.prompt([{
         name: "mainList",
         type: "list",
         message: "What do you want to do?",
         choices: ["show departments", "show employees", "show roles", "add department", 
-                  "add role", "add employee", "quit"]
-    }]);
-
+                  "add role", "add employee", "quit"],
+    }])
+    
     switch (mainList) {
         case "show departments":
                 showDepartments();
@@ -41,8 +42,6 @@ function startProgram() {
             break;
         case "end":
                 iQuit();
-            break;
-        default:
             break;
     };
 };
